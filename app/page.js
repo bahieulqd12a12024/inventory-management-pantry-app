@@ -89,7 +89,7 @@ export default function Home() {
         body: JSON.stringify({
           "model": "meta-llama/llama-3.1-8b-instruct:free",
           "messages": [
-            { "role": "user", "content": "What is destiny?" },
+            { "role": "user", "content": `What are components to make ${itemSubmitName}?` },
           ],
         })
       });
@@ -109,6 +109,7 @@ export default function Home() {
   return (
     <>
       <Box
+        backGround='linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)'
         width="100vw"
         height="70vh"
         display={'flex'}
@@ -173,7 +174,7 @@ export default function Home() {
         >
           Add New Item
         </Button>
-        <Box border={'1px solid #333'}>
+        <Box border={'1px solid #333'} borderRadius="12px" overflow="hidden" boxShadow="0 4px 10px rgba(0, 0, 0, 0.1)">
           <Box
             width="800px"
             height="100px"
@@ -181,12 +182,15 @@ export default function Home() {
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
+            sx={{
+              background: 'linear-gradient(135deg, #ADD8E6 0%, #87CEFA 100%)', // Gradient background for the header
+            }}
           >
-            <Typography variant={'h2'} color={'#333'} textAlign={'center'}>
+            <Typography variant={'h2'} color={'#333'} textAlign={'center'} fontWeight="bold">
               Inventory Items
             </Typography>
           </Box>
-          <Stack width="800px" height="300px" spacing={2} overflow={'auto'}>
+          <Stack width="800px" height="300px" spacing={2} overflow={'auto'} padding={2} bgcolor={'#fafafa'}>
             {inventory.map(({ name, quantity }) => (
               <Box
                 key={name}
@@ -197,20 +201,42 @@ export default function Home() {
                 alignItems={'center'}
                 bgcolor={'#f0f0f0'}
                 paddingX={5}
+                sx={{
+                  background: 'linear-gradient(135deg, #f7f7f7 0%, #e0e0e0 100%)', // Subtle gradient for each item
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)', // Soft shadow for depth
+                  transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                  '&:hover': {
+                    transform: 'scale(1.02)', // Slight zoom effect on hover
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.15)',
+                  },
+                }}
               >
-                <Typography variant={'h3'} color={'#333'} textAlign={'center'}>
+                <Typography variant={'h3'} color={'#333'} textAlign={'center'} fontWeight="500">
                   {name.charAt(0).toUpperCase() + name.slice(1)}
                 </Typography>
-                <Typography variant={'h3'} color={'#333'} textAlign={'center'}>
+                <Typography variant={'h3'} color={'#333'} textAlign={'center'} fontWeight="500">
                   Quantity: {quantity}
                 </Typography>
-                <Button variant="contained" onClick={() => removeItem(name)}>
+                <Button
+                  variant="contained"
+                  onClick={() => removeItem(name)}
+                  sx={{
+                    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+                    boxShadow: '0px 3px 5px 2px rgba(255, 105, 135, .3)',
+                    transition: 'background 0.3s ease',
+                    '&:hover': {
+                      background: 'linear-gradient(45deg, #FF8E53 30%, #FE6B8B 90%)',
+                    },
+                  }}
+                >
                   Remove
                 </Button>
               </Box>
             ))}
           </Stack>
         </Box>
+
       </Box>
       <Box
         width={1}
